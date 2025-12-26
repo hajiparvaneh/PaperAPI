@@ -1,0 +1,44 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sdk", "sdk", "{FF13A09E-0E72-1904-124B-A4E979EF28D3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{B36A84DF-456D-A817-6EDD-3EC3E7F6E11F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dotnet", "dotnet", "{9D954F24-B3F1-FF05-00E7-71549D8DD0D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaperApi", "sdk\dotnet\PaperApi.csproj", "{2E9AFDD3-119B-3FB2-84C2-20A991B583A5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dotnet-generate-pdf", "dotnet-generate-pdf", "{B405A1BD-69C5-5CAA-78DF-CEAE137ABA24}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaperApiExample", "examples\dotnet-generate-pdf\PaperApiExample.csproj", "{2C593399-EC35-A247-B564-5C583F0AE928}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2E9AFDD3-119B-3FB2-84C2-20A991B583A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E9AFDD3-119B-3FB2-84C2-20A991B583A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E9AFDD3-119B-3FB2-84C2-20A991B583A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E9AFDD3-119B-3FB2-84C2-20A991B583A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C593399-EC35-A247-B564-5C583F0AE928}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C593399-EC35-A247-B564-5C583F0AE928}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C593399-EC35-A247-B564-5C583F0AE928}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C593399-EC35-A247-B564-5C583F0AE928}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9D954F24-B3F1-FF05-00E7-71549D8DD0D6} = {FF13A09E-0E72-1904-124B-A4E979EF28D3}
+		{2E9AFDD3-119B-3FB2-84C2-20A991B583A5} = {9D954F24-B3F1-FF05-00E7-71549D8DD0D6}
+		{B405A1BD-69C5-5CAA-78DF-CEAE137ABA24} = {B36A84DF-456D-A817-6EDD-3EC3E7F6E11F}
+		{2C593399-EC35-A247-B564-5C583F0AE928} = {B405A1BD-69C5-5CAA-78DF-CEAE137ABA24}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {68FB734D-6AA2-4D9D-A267-71E8B8E13ED7}
+	EndGlobalSection
+EndGlobal
