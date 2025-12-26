@@ -12,6 +12,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
-    <ProjectReference Include="../../sdk/dotnet/PaperApi.csproj" />
+    <PackageReference Include="PaperApi" Version="*-*" />
   </ItemGroup>
 </Project>
