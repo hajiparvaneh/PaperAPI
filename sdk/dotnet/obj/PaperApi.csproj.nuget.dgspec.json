@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/hamidhajiparvaneh/Documents/GitHub/PaperAPI.de/Pubic_repo_sdk_example/sdk/dotnet/PaperApi.csproj": {}
+    "/home/runner/work/PaperAPI/PaperAPI/sdk/dotnet/PaperApi.csproj": {}
   },
   "projects": {
-    "/Users/hamidhajiparvaneh/Documents/GitHub/PaperAPI.de/Pubic_repo_sdk_example/sdk/dotnet/PaperApi.csproj": {
-      "version": "0.1.0-preview",
+    "/home/runner/work/PaperAPI/PaperAPI/sdk/dotnet/PaperApi.csproj": {
+      "version": "0.1.1-preview",
       "restore": {
-        "projectUniqueName": "/Users/hamidhajiparvaneh/Documents/GitHub/PaperAPI.de/Pubic_repo_sdk_example/sdk/dotnet/PaperApi.csproj",
+        "projectUniqueName": "/home/runner/work/PaperAPI/PaperAPI/sdk/dotnet/PaperApi.csproj",
         "projectName": "PaperApi",
-        "projectPath": "/Users/hamidhajiparvaneh/Documents/GitHub/PaperAPI.de/Pubic_repo_sdk_example/sdk/dotnet/PaperApi.csproj",
-        "packagesPath": "/Users/hamidhajiparvaneh/.nuget/packages/",
-        "outputPath": "/Users/hamidhajiparvaneh/Documents/GitHub/PaperAPI.de/Pubic_repo_sdk_example/sdk/dotnet/obj/",
+        "projectPath": "/home/runner/work/PaperAPI/PaperAPI/sdk/dotnet/PaperApi.csproj",
+        "packagesPath": "/home/runner/.nuget/packages/",
+        "outputPath": "/home/runner/work/PaperAPI/PaperAPI/sdk/dotnet/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/hamidhajiparvaneh/.nuget/NuGet/NuGet.Config"
+          "/home/runner/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netstandard2.0"
@@ -38,12 +38,24 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "netstandard2.0": {
           "targetAlias": "netstandard2.0",
           "dependencies": {
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Options": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Options.ConfigurationExtensions": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
             "NETStandard.Library": {
               "suppressParent": "All",
               "target": "Package",
@@ -52,7 +64,7 @@
             },
             "System.Text.Json": {
               "target": "Package",
-              "version": "[8.0.4, )"
+              "version": "[8.0.6, )"
             }
           },
           "imports": [
@@ -66,7 +78,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.304/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.101/RuntimeIdentifierGraph.json"
         }
       }
     }

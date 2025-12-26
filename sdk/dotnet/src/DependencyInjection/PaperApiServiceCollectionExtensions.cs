@@ -30,6 +30,11 @@ public static class PaperApiServiceCollectionExtensions
         {
             var opts = sp.GetRequiredService<IOptions<PaperApiOptions>>().Value;
             client.BaseAddress = opts.ResolveBaseUri();
+        })
+        .AddTypedClient<IPaperApiClient>((client, sp) =>
+        {
+            var opts = sp.GetRequiredService<IOptions<PaperApiOptions>>().Value;
+            return new PaperApiClient(client, opts);
         });
 
         return services;
@@ -53,6 +58,11 @@ public static class PaperApiServiceCollectionExtensions
         {
             var opts = sp.GetRequiredService<IOptions<PaperApiOptions>>().Value;
             client.BaseAddress = opts.ResolveBaseUri();
+        })
+        .AddTypedClient<IPaperApiClient>((client, sp) =>
+        {
+            var opts = sp.GetRequiredService<IOptions<PaperApiOptions>>().Value;
+            return new PaperApiClient(client, opts);
         });
 
         return services;

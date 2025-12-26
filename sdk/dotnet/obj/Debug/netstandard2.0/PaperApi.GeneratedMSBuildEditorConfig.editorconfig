@@ -1,6 +1,6 @@
 is_global = true
 build_property.RootNamespace = PaperApi
-build_property.ProjectDir = /Users/hamidhajiparvaneh/Documents/GitHub/PaperAPI.de/Pubic_repo_sdk_example/sdk/dotnet/
+build_property.ProjectDir = /home/runner/work/PaperAPI/PaperAPI/sdk/dotnet/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.CsWinRTUseWindowsUIXamlProjections = false

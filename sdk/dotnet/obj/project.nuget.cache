@@ -1,32 +1,31 @@
 {
   "version": 2,
-  "dgSpecHash": "f0s1/pu3Yu8=",
+  "dgSpecHash": "0zh7kl+V1/Q=",
   "success": true,
-  "projectFilePath": "/Users/hamidhajiparvaneh/Documents/GitHub/PaperAPI.de/Pubic_repo_sdk_example/sdk/dotnet/PaperApi.csproj",
+  "projectFilePath": "/home/runner/work/PaperAPI/PaperAPI/sdk/dotnet/PaperApi.csproj",
   "expectedPackageFiles": [
-    "/Users/hamidhajiparvaneh/.nuget/packages/microsoft.bcl.asyncinterfaces/8.0.0/microsoft.bcl.asyncinterfaces.8.0.0.nupkg.sha512",
-    "/Users/hamidhajiparvaneh/.nuget/packages/microsoft.netcore.platforms/1.1.0/microsoft.netcore.platforms.1.1.0.nupkg.sha512",
-    "/Users/hamidhajiparvaneh/.nuget/packages/netstandard.library/2.0.3/netstandard.library.2.0.3.nupkg.sha512",
-    "/Users/hamidhajiparvaneh/.nuget/packages/system.buffers/4.5.1/system.buffers.4.5.1.nupkg.sha512",
-    "/Users/hamidhajiparvaneh/.nuget/packages/system.memory/4.5.5/system.memory.4.5.5.nupkg.sha512",
-    "/Users/hamidhajiparvaneh/.nuget/packages/system.numerics.vectors/4.4.0/system.numerics.vectors.4.4.0.nupkg.sha512",
-    "/Users/hamidhajiparvaneh/.nuget/packages/system.runtime.compilerservices.unsafe/6.0.0/system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
-    "/Users/hamidhajiparvaneh/.nuget/packages/system.text.encodings.web/8.0.0/system.text.encodings.web.8.0.0.nupkg.sha512",
-    "/Users/hamidhajiparvaneh/.nuget/packages/system.text.json/8.0.4/system.text.json.8.0.4.nupkg.sha512",
-    "/Users/hamidhajiparvaneh/.nuget/packages/system.threading.tasks.extensions/4.5.4/system.threading.tasks.extensions.4.5.4.nupkg.sha512"
+    "/home/runner/.nuget/packages/microsoft.bcl.asyncinterfaces/8.0.0/microsoft.bcl.asyncinterfaces.8.0.0.nupkg.sha512",
+    "/home/runner/.nuget/packages/microsoft.extensions.configuration.abstractions/8.0.0/microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",
+    "/home/runner/.nuget/packages/microsoft.extensions.configuration.binder/8.0.0/microsoft.extensions.configuration.binder.8.0.0.nupkg.sha512",
+    "/home/runner/.nuget/packages/microsoft.extensions.dependencyinjection/8.0.0/microsoft.extensions.dependencyinjection.8.0.0.nupkg.sha512",
+    "/home/runner/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/8.0.0/microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+    "/home/runner/.nuget/packages/microsoft.extensions.http/8.0.0/microsoft.extensions.http.8.0.0.nupkg.sha512",
+    "/home/runner/.nuget/packages/microsoft.extensions.logging/8.0.0/microsoft.extensions.logging.8.0.0.nupkg.sha512",
+    "/home/runner/.nuget/packages/microsoft.extensions.logging.abstractions/8.0.0/microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512",
+    "/home/runner/.nuget/packages/microsoft.extensions.options/8.0.0/microsoft.extensions.options.8.0.0.nupkg.sha512",
+    "/home/runner/.nuget/packages/microsoft.extensions.options.configurationextensions/8.0.0/microsoft.extensions.options.configurationextensions.8.0.0.nupkg.sha512",
+    "/home/runner/.nuget/packages/microsoft.extensions.primitives/8.0.0/microsoft.extensions.primitives.8.0.0.nupkg.sha512",
+    "/home/runner/.nuget/packages/microsoft.netcore.platforms/1.1.0/microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "/home/runner/.nuget/packages/netstandard.library/2.0.3/netstandard.library.2.0.3.nupkg.sha512",
+    "/home/runner/.nuget/packages/system.buffers/4.5.1/system.buffers.4.5.1.nupkg.sha512",
+    "/home/runner/.nuget/packages/system.componentmodel.annotations/5.0.0/system.componentmodel.annotations.5.0.0.nupkg.sha512",
+    "/home/runner/.nuget/packages/system.diagnostics.diagnosticsource/8.0.0/system.diagnostics.diagnosticsource.8.0.0.nupkg.sha512",
+    "/home/runner/.nuget/packages/system.memory/4.5.5/system.memory.4.5.5.nupkg.sha512",
+    "/home/runner/.nuget/packages/system.numerics.vectors/4.4.0/system.numerics.vectors.4.4.0.nupkg.sha512",
+    "/home/runner/.nuget/packages/system.runtime.compilerservices.unsafe/6.0.0/system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
+    "/home/runner/.nuget/packages/system.text.encodings.web/8.0.0/system.text.encodings.web.8.0.0.nupkg.sha512",
+    "/home/runner/.nuget/packages/system.text.json/8.0.6/system.text.json.8.0.6.nupkg.sha512",
+    "/home/runner/.nuget/packages/system.threading.tasks.extensions/4.5.4/system.threading.tasks.extensions.4.5.4.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1903",
-      "level": "Warning",
-      "message": "Package 'System.Text.Json' 8.0.4 has a known high severity vulnerability, https://github.com/advisories/GHSA-8g4q-xg66-9fp4",
-      "projectPath": "/Users/hamidhajiparvaneh/Documents/GitHub/PaperAPI.de/Pubic_repo_sdk_example/sdk/dotnet/PaperApi.csproj",
-      "warningLevel": 1,
-      "filePath": "/Users/hamidhajiparvaneh/Documents/GitHub/PaperAPI.de/Pubic_repo_sdk_example/sdk/dotnet/PaperApi.csproj",
-      "libraryId": "System.Text.Json",
-      "targetGraphs": [
-        ".NETStandard,Version=v2.0"
-      ]
-    }
-  ]
+  "logs": []
 }

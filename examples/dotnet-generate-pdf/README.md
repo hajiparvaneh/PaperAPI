@@ -27,7 +27,7 @@ The program wires the SDK using `AddPaperApiClient` and resolves `IPaperApiClien
 ## Run the tests
 ```bash
 cd examples/dotnet-generate-pdf/tests
- dotnet test
+dotnet test
 ```
 The unit test stubs HTTP responses with a custom handler to verify the client sends the expected authorization header and returns the mocked PDF bytes—no network calls are made.
 
