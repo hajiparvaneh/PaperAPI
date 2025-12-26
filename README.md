@@ -4,6 +4,15 @@
 
 Welcome to the public PaperAPI SDK playground. This repository contains language-specific SDKs, framework-agnostic examples, and CI/CD automation that help you start building with [PaperAPI](https://paperapi.de) immediately.
 
+## What is PaperAPI?
+
+[PaperAPI](https://paperapi.de) is a hosted wkhtmltopdf platform that converts HTML into pixel-perfect PDFs without servers, fonts, or binary installs. It is built and hosted in the EU for GDPR-compliant workloads, and exposes both synchronous and asynchronous generation flows so you can either stream documents immediately or queue large jobs in the background.
+
+- **Simple HTTP API**: Send HTML + options to `/v1/generate` or `/v1/generate-async` and receive bytes or a job envelope.
+- **Operational safety**: Usage counters, audit logs, request IDs, retries, and structured errors make production monitoring straightforward.
+- **EU residency**: All rendering happens on EU infrastructure with DPA, privacy, and security docs ready for procurement teams.
+- **Batteries included**: Dashboards for API keys, usage, billing, logs, and download history, plus SDKs and examples so you can integrate in minutes.
+
 ## Get your API key
 1. Create a free PaperAPI account at [paperapi.de](https://paperapi.de).
 2. Head to your dashboard and copy the generated API key.
