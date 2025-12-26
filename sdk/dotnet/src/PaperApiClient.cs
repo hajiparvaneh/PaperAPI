@@ -12,7 +12,7 @@ namespace PaperApi;
 /// <summary>
 /// Lightweight HTTP client for PaperAPI.
 /// </summary>
-public sealed class PaperApiClient : IDisposable
+public sealed class PaperApiClient : IPaperApiClient, IDisposable
 {
     private static readonly ProductInfoHeaderValue UserAgentHeader = new("PaperApiDotnetSdk", "0.1.0");
 
