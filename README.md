@@ -1,3 +1,5 @@
+![PaperAPI logo](paperapi-logo.png)
+
 # PaperAPI SDKs and Examples
 
 Welcome to the public PaperAPI SDK playground. This repository contains language-specific SDKs, framework-agnostic examples, and CI/CD automation that help you start building with [PaperAPI](https://paperapi.de) immediately.
