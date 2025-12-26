@@ -1,0 +1,4 @@
+sdk/dotnet/obj**
+sdk/dotnet/bin**
+examples/**/bin**
+examples/**/obj**
