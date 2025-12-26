@@ -53,12 +53,12 @@ public class ClientTests
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             LastRequest = request;
-            var content = new ByteArrayContent(_responseBytes);
-            content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/pdf");
-            
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = content
+                Content = new ByteArrayContent(_responseBytes)
+                {
+                    Headers = { ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/pdf") }
+                }
             };
             return Task.FromResult(response);
         }
