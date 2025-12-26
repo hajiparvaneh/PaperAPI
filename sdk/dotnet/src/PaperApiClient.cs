@@ -134,7 +134,11 @@ public sealed class PaperApiClient : IDisposable
 
     private static void ValidateGenerateRequest(PdfGenerateRequest request)
     {
-        ArgumentNullException.ThrowIfNull(request);
+        if (request is null)
+        {
+            throw new ArgumentNullException(nameof(request));
+        }
+
         if (string.IsNullOrWhiteSpace(request.Html))
         {
             throw new ArgumentException("Html is required.", nameof(request));
