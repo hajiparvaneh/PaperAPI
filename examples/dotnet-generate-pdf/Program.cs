@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using PaperApi;
 using PaperApi.Models;
 
@@ -6,11 +7,16 @@ LoadEnvFromRoot();
 var apiKey = GetRequiredEnv("PAPERAPI_API_KEY");
 var baseUrl = GetRequiredEnv("PAPERAPI_BASE_URL");
 
-using var client = new PaperApiClient(new PaperApiOptions
+var services = new ServiceCollection();
+services.AddPaperApiClient(opts =>
 {
-    ApiKey = apiKey,
-    BaseUrl = baseUrl
+  opts.ApiKey = apiKey;
+  opts.BaseUrl = baseUrl;
 });
+
+using var provider = services.BuildServiceProvider();
+using var scope = provider.CreateScope();
+var client = scope.ServiceProvider.GetRequiredService<IPaperApiClient>();
 
 var html = """
 <!doctype html>
@@ -66,13 +72,13 @@ await GeneratePdfSynchronouslyAsync(client, html);
 await RunAsyncJobWorkflowAsync(client, html);
 Console.WriteLine("All API calls completed successfully.");
 
-static async Task EnsureHealthAsync(PaperApiClient client)
+static async Task EnsureHealthAsync(IPaperApiClient client)
 {
     await client.CheckHealthAsync();
     Console.WriteLine("Health endpoint responded successfully.\n");
 }
 
-static async Task DescribeAccountAsync(PaperApiClient client)
+static async Task DescribeAccountAsync(IPaperApiClient client)
 {
     Console.WriteLine("Fetching authenticated account info...");
     var profile = await client.GetWhoAmIAsync();
@@ -82,7 +88,7 @@ static async Task DescribeAccountAsync(PaperApiClient client)
     Console.WriteLine($"Usage this period: {usage.Used}/{usage.MonthlyLimit} PDFs (remaining: {usage.Remaining}, overage: {usage.Overage}). Next reset on {usage.NextRechargeAt:yyyy-MM-dd}.\n");
 }
 
-static async Task GeneratePdfSynchronouslyAsync(PaperApiClient client, string html)
+  static async Task GeneratePdfSynchronouslyAsync(IPaperApiClient client, string html)
 {
     Console.WriteLine("Generating a PDF synchronously...");
     var pdfBytes = await client.GeneratePdfAsync(BuildInvoiceRequest(html));
@@ -90,7 +96,7 @@ static async Task GeneratePdfSynchronouslyAsync(PaperApiClient client, string ht
     Console.WriteLine($"Saved synchronous PDF to {path}\n");
 }
 
-static async Task RunAsyncJobWorkflowAsync(PaperApiClient client, string html)
+  static async Task RunAsyncJobWorkflowAsync(IPaperApiClient client, string html)
 {
     Console.WriteLine("Submitting an asynchronous PDF job...");
     var job = await client.EnqueuePdfJobAsync(BuildInvoiceRequest(html));
