@@ -24,6 +24,13 @@ The app automatically looks for an `.env` file in the repository root and popula
 
 The program wires the SDK using `AddPaperApiClient` and resolves `IPaperApiClient` from the service provider, matching the recommended pattern for ASP.NET Core and worker services.
 
+## Run the tests
+```bash
+cd examples/dotnet-generate-pdf/tests
+ dotnet test
+```
+The unit test stubs HTTP responses with a custom handler to verify the client sends the expected authorization header and returns the mocked PDF bytes—no network calls are made.
+
 ## Expected output
 ```
 Loading configuration from /.../.env
