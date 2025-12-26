@@ -8,7 +8,7 @@
     <AssemblyName>PaperApi</AssemblyName>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageId>PaperApi</PackageId>
-    <Version>0.1.0-preview</Version>
+    <Version>0.1.1-preview</Version>
     <Authors>PaperAPI</Authors>
     <Company>PaperAPI</Company>
     <Description>Official PaperAPI client for .NET</Description>
