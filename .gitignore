@@ -1,6 +1,9 @@
 # .NET build output
 sdk/dotnet/bin/
 sdk/dotnet/obj/
+sdk/dotnet/tests/**/bin/
+sdk/dotnet/tests/**/obj/
+sdk/dotnet/artifacts/
 examples/**/bin/
 examples/**/obj/
 
