@@ -41,7 +41,7 @@ Each language folder is self-contained with its own README and publishing strate
 * Navigate to `sdk/dotnet` and restore packages: `dotnet restore`.
 * Run the sample generator: `cd ../../examples/dotnet-generate-pdf && dotnet run`.
 
-The example references the local SDK project so you can iterate on the client library while keeping the example pinned to the current commit.
+The example consumes the published NuGet package (`PaperApi`), so it mirrors exactly what end users install from nuget.org.
 
 The `PaperApiClient` included here mirrors every public endpoint:
 
