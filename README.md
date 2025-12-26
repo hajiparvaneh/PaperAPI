@@ -37,19 +37,13 @@ Pubic_repo_sdk_example/
 
 Each language folder is self-contained with its own README and publishing strategy. .NET is the first fully implemented SDK; the JavaScript and Python directories contain documentation stubs until their implementations are finalized.
 
-## Quick start: .NET SDK
+## Examples
 
-* Install the [.NET 8 SDK](https://dotnet.microsoft.com/download).
-* Navigate to `sdk/dotnet` and restore packages: `dotnet restore`.
-* Run the sample generator: `cd ../../examples/dotnet-generate-pdf && dotnet run`.
+Every example has its own README with prerequisites and end-to-end instructions. Start with the implementation that matches your stack:
 
-The example consumes the published NuGet package (`PaperApi`), so it mirrors exactly what end users install from nuget.org.
-
-The `PaperApiClient` included here mirrors every public endpoint:
-
-- `GeneratePdfAsync` for synchronous PDF bytes.
-- `EnqueuePdfJobAsync` / `GetJobStatusAsync` / `DownloadJobResultAsync` for queued jobs.
-- `GetUsageSummaryAsync`, `GetWhoAmIAsync`, and `CheckHealthAsync` for account telemetry.
+- [.NET – Generate a PDF](examples/dotnet-generate-pdf/README.md): console app that hits every PaperAPI endpoint (health, account metadata, sync generation, async jobs) and saves PDFs to disk.
+- [JavaScript – Generate a PDF](examples/js-generate-pdf/README.md): placeholder until the TypeScript SDK is finalized.
+- [Python – Generate a PDF](examples/python-generate-pdf/README.md): placeholder until the PyPI SDK ships.
 
 ## Documentation
 Deep-dive docs live under `docs/`. They describe authentication, request/response formats, and release guidelines, keeping the root README intentionally concise.
