@@ -31,6 +31,7 @@ public sealed class PaperApiOptions
     internal bool IsBaseUrlValid()
     {
         var value = string.IsNullOrWhiteSpace(BaseUrl) ? DefaultBaseUrl : BaseUrl;
+        value = value.EndsWith("/", StringComparison.Ordinal) ? value : value + "/";
         return Uri.TryCreate(value, UriKind.Absolute, out _);
     }
 

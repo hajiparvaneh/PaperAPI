@@ -1,3 +1,4 @@
+using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using PaperApi;
 using PaperApi.Models;
@@ -161,24 +162,14 @@ static void LoadEnvFromRoot()
   }
 
   Console.WriteLine($"Loading configuration from {envFile}");
-  foreach (var rawLine in File.ReadAllLines(envFile))
-  {
-    var line = rawLine.Trim();
-    if (string.IsNullOrEmpty(line) || line.StartsWith('#'))
-    {
-      continue;
-    }
-
-    var separatorIndex = line.IndexOf('=');
-    if (separatorIndex <= 0)
-    {
-      continue;
-    }
-
-    var key = line[..separatorIndex].Trim();
-    var value = line[(separatorIndex + 1)..].Trim();
-    Environment.SetEnvironmentVariable(key, value);
-  }
+  File.ReadAllLines(envFile)
+    .Select(rawLine => rawLine.Trim())
+    .Where(line => !string.IsNullOrEmpty(line) && !line.StartsWith('#'))
+    .Select(line => (line, separatorIndex: line.IndexOf('=')))
+    .Where(x => x.separatorIndex > 0)
+    .Select(x => (key: x.line[..x.separatorIndex].Trim(), value: x.line[(x.separatorIndex + 1)..].Trim()))
+    .ToList()
+    .ForEach(x => Environment.SetEnvironmentVariable(x.key, x.value));
 }
 
 static string? FindNearestEnvFile()

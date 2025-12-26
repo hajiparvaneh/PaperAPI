@@ -26,11 +26,13 @@ public static class PaperApiServiceCollectionExtensions
             .Validate(BaseUrlIsValid, "BaseUrl must be a valid absolute URI")
             .ValidateOnStart();
 
-        services.AddHttpClient<IPaperApiClient, PaperApiClient>((sp, client) =>
-        {
-            var opts = sp.GetRequiredService<IOptions<PaperApiOptions>>().Value;
-            client.BaseAddress = opts.ResolveBaseUri();
-        });
+        services.AddHttpClient<IPaperApiClient, PaperApiClient>()
+            .AddTypedClient<IPaperApiClient>((client, sp) =>
+            {
+                var opts = sp.GetRequiredService<IOptions<PaperApiOptions>>().Value;
+                client.BaseAddress = opts.ResolveBaseUri();
+                return new PaperApiClient(client, opts);
+            });
 
         return services;
     }
@@ -49,11 +51,13 @@ public static class PaperApiServiceCollectionExtensions
             .Validate(BaseUrlIsValid, "BaseUrl must be a valid absolute URI")
             .ValidateOnStart();
 
-        services.AddHttpClient<IPaperApiClient, PaperApiClient>((sp, client) =>
-        {
-            var opts = sp.GetRequiredService<IOptions<PaperApiOptions>>().Value;
-            client.BaseAddress = opts.ResolveBaseUri();
-        });
+        services.AddHttpClient<IPaperApiClient, PaperApiClient>()
+            .AddTypedClient<IPaperApiClient>((client, sp) =>
+            {
+                var opts = sp.GetRequiredService<IOptions<PaperApiOptions>>().Value;
+                client.BaseAddress = opts.ResolveBaseUri();
+                return new PaperApiClient(client, opts);
+            });
 
         return services;
     }

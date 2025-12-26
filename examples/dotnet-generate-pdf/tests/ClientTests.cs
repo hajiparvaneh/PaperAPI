@@ -21,11 +21,11 @@ public class ClientTests
             BaseAddress = new Uri("https://example.com/")
         };
 
-        var client = new PaperApiClient(new PaperApiOptions
+        var client = new PaperApiClient(httpClient, new PaperApiOptions
         {
             ApiKey = "test-key",
             BaseUrl = "https://example.com/"
-        }, httpClient);
+        });
 
         var payload = new PdfGenerateRequest { Html = "<p>Hi</p>" };
 
@@ -56,8 +56,10 @@ public class ClientTests
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new ByteArrayContent(_responseBytes)
+                {
+                    Headers = { ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/pdf") }
+                }
             };
-            response.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/pdf");
             return Task.FromResult(response);
         }
     }
