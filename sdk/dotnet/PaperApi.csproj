@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <RootNamespace>PaperApi</RootNamespace>
+    <AssemblyName>PaperApi</AssemblyName>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PackageId>PaperApi</PackageId>
+    <Version>0.1.0-preview</Version>
+    <Authors>PaperAPI</Authors>
+    <Company>PaperAPI</Company>
+    <Description>Official PaperAPI client for .NET</Description>
+    <PackageTags>paperapi;pdf;documents;api</PackageTags>
+    <RepositoryUrl>https://github.com/paperapi/Pubic_repo_sdk_example</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,7 @@
+{
+  "name": "@paperapi/sdk",
+  "version": "0.0.0-development",
+  "description": "PaperAPI JavaScript SDK (placeholder)",
+  "private": true,
+  "license": "MIT"
+}

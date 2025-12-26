@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "dgSpecHash": "Vh3ey4P2d2o=",
+  "success": false,
+  "projectFilePath": "/Users/hamidhajiparvaneh/Documents/GitHub/PaperAPI.de/Pubic_repo_sdk_example/sdk/dotnet/PaperApi.csproj",
+  "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "NU1301",
+      "level": "Error",
+      "message": "Unable to load the service index for source https://api.nuget.org/v3/index.json.\n  The type initializer for 'System.Net.CookieContainer' threw an exception.\n  GetDomainName: -1",
+      "projectPath": "/Users/hamidhajiparvaneh/Documents/GitHub/PaperAPI.de/Pubic_repo_sdk_example/sdk/dotnet/PaperApi.csproj",
+      "filePath": "/Users/hamidhajiparvaneh/Documents/GitHub/PaperAPI.de/Pubic_repo_sdk_example/sdk/dotnet/PaperApi.csproj",
+      "libraryId": "NETStandard.Library",
+      "targetGraphs": []
+    }
+  ]
+}

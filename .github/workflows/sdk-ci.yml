@@ -1,0 +1,67 @@
+name: SDK CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  dotnet-sdk:
+    name: Build & Pack .NET SDK
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: sdk/dotnet
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+      - name: Restore
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+      - name: Pack
+        run: dotnet pack --configuration Release --no-build --include-symbols --output ./artifacts
+      - name: Upload package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: paperapi-dotnet-nuget
+          path: sdk/dotnet/artifacts/*.nupkg
+
+  publish-nuget:
+    name: Publish NuGet package
+    needs: dotnet-sdk
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: sdk/dotnet
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+      - name: Restore
+        run: dotnet restore
+      - name: Pack
+        run: dotnet pack --configuration Release --include-symbols --output ./artifacts
+      - name: Publish to NuGet
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: |
+          if [ -z "${NUGET_API_KEY}" ]; then
+            echo "NUGET_API_KEY is not configured. Skipping publish." && exit 0
+          fi
+          dotnet nuget push ./artifacts/*.nupkg \
+            --api-key "$NUGET_API_KEY" \
+            --source https://api.nuget.org/v3/index.json \
+            --skip-duplicate
