@@ -1,4 +1,26 @@
-sdk/dotnet/obj**
-sdk/dotnet/bin**
-examples/**/bin**
-examples/**/obj**
+# .NET build output
+sdk/dotnet/bin/
+sdk/dotnet/obj/
+examples/**/bin/
+examples/**/obj/
+
+# JavaScript/TypeScript artifacts
+sdk/js/node_modules/
+sdk/js/dist/
+sdk/js/build/
+examples/**/node_modules/
+examples/**/dist/
+examples/**/build/
+
+# Python artifacts
+sdk/python/**/__pycache__/
+sdk/python/**/*.py[cod]
+sdk/python/.venv/
+sdk/python/venv/
+sdk/python/build/
+sdk/python/dist/
+sdk/python/*.egg-info
+examples/**/__pycache__/
+examples/**/*.py[cod]
+examples/**/.venv/
+examples/**/venv/
