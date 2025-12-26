@@ -6,7 +6,7 @@ LoadEnvFromRoot();
 var apiKey = GetRequiredEnv("PAPERAPI_API_KEY");
 var baseUrl = GetRequiredEnv("PAPERAPI_BASE_URL");
 
-var client = new PaperApiClient(new PaperApiOptions
+using var client = new PaperApiClient(new PaperApiOptions
 {
     ApiKey = apiKey,
     BaseUrl = baseUrl
@@ -59,7 +59,71 @@ var html = """
 </html>
 """;
 
-var pdfBytes = await client.GeneratePdfAsync(new PdfGenerateRequest
+Console.WriteLine("Checking PaperAPI health...");
+await EnsureHealthAsync(client);
+await DescribeAccountAsync(client);
+await GeneratePdfSynchronouslyAsync(client, html);
+await RunAsyncJobWorkflowAsync(client, html);
+Console.WriteLine("All API calls completed successfully.");
+
+static async Task EnsureHealthAsync(PaperApiClient client)
+{
+    await client.CheckHealthAsync();
+    Console.WriteLine("Health endpoint responded successfully.\n");
+}
+
+static async Task DescribeAccountAsync(PaperApiClient client)
+{
+    Console.WriteLine("Fetching authenticated account info...");
+    var profile = await client.GetWhoAmIAsync();
+    Console.WriteLine($"Logged in as {profile.Name} <{profile.Email}> on the {profile.Plan.Name} plan.");
+
+    var usage = await client.GetUsageSummaryAsync();
+    Console.WriteLine($"Usage this period: {usage.Used}/{usage.MonthlyLimit} PDFs (remaining: {usage.Remaining}, overage: {usage.Overage}). Next reset on {usage.NextRechargeAt:yyyy-MM-dd}.\n");
+}
+
+static async Task GeneratePdfSynchronouslyAsync(PaperApiClient client, string html)
+{
+    Console.WriteLine("Generating a PDF synchronously...");
+    var pdfBytes = await client.GeneratePdfAsync(BuildInvoiceRequest(html));
+    var path = await WritePdfToDiskAsync(pdfBytes, "sync");
+    Console.WriteLine($"Saved synchronous PDF to {path}\n");
+}
+
+static async Task RunAsyncJobWorkflowAsync(PaperApiClient client, string html)
+{
+    Console.WriteLine("Submitting an asynchronous PDF job...");
+    var job = await client.EnqueuePdfJobAsync(BuildInvoiceRequest(html));
+    Console.WriteLine($"Job {job.Id} queued with status '{job.Status}'. Polling for completion...");
+
+    const int maxAttempts = 15;
+    var delay = TimeSpan.FromSeconds(2);
+
+    for (var attempt = 1; attempt <= maxAttempts; attempt++)
+    {
+        var status = await client.GetJobStatusAsync(job.Id);
+        Console.WriteLine($"Poll {attempt}: job status is '{status.Status}'.");
+
+        if (IsStatus(status.Status, "succeeded"))
+        {
+            var pdfBytes = await client.DownloadJobResultAsync(job.Id);
+            var path = await WritePdfToDiskAsync(pdfBytes, "async");
+            Console.WriteLine($"Asynchronous job completed. Saved PDF to {path}\n");
+            return;
+        }
+
+        if (IsStatus(status.Status, "failed"))
+        {
+            throw new InvalidOperationException($"Job {job.Id} failed: {status.ErrorMessage ?? "Unknown error"}");
+        }
+
+        await Task.Delay(delay);
+    }
+
+    throw new TimeoutException($"Job {job.Id} did not complete within the polling window. Try increasing maxAttempts.");
+}
+
+static PdfGenerateRequest BuildInvoiceRequest(string html) => new()
 {
     Html = html,
     Options = new PdfOptions
@@ -68,14 +132,18 @@ var pdfBytes = await client.GeneratePdfAsync(new PdfGenerateRequest
         MarginTop = 5,
         MarginBottom = 5
     }
-});
+};
 
-var outputPath = Path.Combine(
-    Directory.GetCurrentDirectory(),
-    $"paperapi-invoice-{DateTimeOffset.UtcNow:yyyyMMddHHmmss}.pdf");
-await File.WriteAllBytesAsync(outputPath, pdfBytes);
+static async Task<string> WritePdfToDiskAsync(byte[] pdfBytes, string prefix)
+{
+    var fileName = $"paperapi-{prefix}-invoice-{DateTimeOffset.UtcNow:yyyyMMddHHmmss}.pdf";
+    var outputPath = Path.Combine(Directory.GetCurrentDirectory(), fileName);
+    await File.WriteAllBytesAsync(outputPath, pdfBytes);
+    return outputPath;
+}
 
-Console.WriteLine($"Saved PDF to {outputPath}");
+static bool IsStatus(string status, string expected) =>
+    string.Equals(status, expected, StringComparison.OrdinalIgnoreCase);
 
 static void LoadEnvFromRoot()
 {
