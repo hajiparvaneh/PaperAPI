@@ -1,3 +1,5 @@
+using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
 using PaperApi;
 using PaperApi.Models;
 
@@ -6,11 +8,16 @@ LoadEnvFromRoot();
 var apiKey = GetRequiredEnv("PAPERAPI_API_KEY");
 var baseUrl = GetRequiredEnv("PAPERAPI_BASE_URL");
 
-using var client = new PaperApiClient(new PaperApiOptions
+var services = new ServiceCollection();
+services.AddPaperApiClient(opts =>
 {
-    ApiKey = apiKey,
-    BaseUrl = baseUrl
+  opts.ApiKey = apiKey;
+  opts.BaseUrl = baseUrl;
 });
+
+using var provider = services.BuildServiceProvider();
+using var scope = provider.CreateScope();
+var client = scope.ServiceProvider.GetRequiredService<IPaperApiClient>();
 
 var html = """
 <!doctype html>
@@ -66,80 +73,80 @@ await GeneratePdfSynchronouslyAsync(client, html);
 await RunAsyncJobWorkflowAsync(client, html);
 Console.WriteLine("All API calls completed successfully.");
 
-static async Task EnsureHealthAsync(PaperApiClient client)
+static async Task EnsureHealthAsync(IPaperApiClient client)
 {
-    await client.CheckHealthAsync();
-    Console.WriteLine("Health endpoint responded successfully.\n");
+  await client.CheckHealthAsync();
+  Console.WriteLine("Health endpoint responded successfully.\n");
 }
 
-static async Task DescribeAccountAsync(PaperApiClient client)
+static async Task DescribeAccountAsync(IPaperApiClient client)
 {
-    Console.WriteLine("Fetching authenticated account info...");
-    var profile = await client.GetWhoAmIAsync();
-    Console.WriteLine($"Logged in as {profile.Name} <{profile.Email}> on the {profile.Plan.Name} plan.");
+  Console.WriteLine("Fetching authenticated account info...");
+  var profile = await client.GetWhoAmIAsync();
+  Console.WriteLine($"Logged in as {profile.Name} <{profile.Email}> on the {profile.Plan.Name} plan.");
 
-    var usage = await client.GetUsageSummaryAsync();
-    Console.WriteLine($"Usage this period: {usage.Used}/{usage.MonthlyLimit} PDFs (remaining: {usage.Remaining}, overage: {usage.Overage}). Next reset on {usage.NextRechargeAt:yyyy-MM-dd}.\n");
+  var usage = await client.GetUsageSummaryAsync();
+  Console.WriteLine($"Usage this period: {usage.Used}/{usage.MonthlyLimit} PDFs (remaining: {usage.Remaining}, overage: {usage.Overage}). Next reset on {usage.NextRechargeAt:yyyy-MM-dd}.\n");
 }
 
-static async Task GeneratePdfSynchronouslyAsync(PaperApiClient client, string html)
+static async Task GeneratePdfSynchronouslyAsync(IPaperApiClient client, string html)
 {
-    Console.WriteLine("Generating a PDF synchronously...");
-    var pdfBytes = await client.GeneratePdfAsync(BuildInvoiceRequest(html));
-    var path = await WritePdfToDiskAsync(pdfBytes, "sync");
-    Console.WriteLine($"Saved synchronous PDF to {path}\n");
+  Console.WriteLine("Generating a PDF synchronously...");
+  var pdfBytes = await client.GeneratePdfAsync(BuildInvoiceRequest(html));
+  var path = await WritePdfToDiskAsync(pdfBytes, "sync");
+  Console.WriteLine($"Saved synchronous PDF to {path}\n");
 }
 
-static async Task RunAsyncJobWorkflowAsync(PaperApiClient client, string html)
+static async Task RunAsyncJobWorkflowAsync(IPaperApiClient client, string html)
 {
-    Console.WriteLine("Submitting an asynchronous PDF job...");
-    var job = await client.EnqueuePdfJobAsync(BuildInvoiceRequest(html));
-    Console.WriteLine($"Job {job.Id} queued with status '{job.Status}'. Polling for completion...");
+  Console.WriteLine("Submitting an asynchronous PDF job...");
+  var job = await client.EnqueuePdfJobAsync(BuildInvoiceRequest(html));
+  Console.WriteLine($"Job {job.Id} queued with status '{job.Status}'. Polling for completion...");
 
-    const int maxAttempts = 15;
-    var delay = TimeSpan.FromSeconds(2);
+  const int maxAttempts = 15;
+  var delay = TimeSpan.FromSeconds(2);
 
-    for (var attempt = 1; attempt <= maxAttempts; attempt++)
+  for (var attempt = 1; attempt <= maxAttempts; attempt++)
+  {
+    var status = await client.GetJobStatusAsync(job.Id);
+    Console.WriteLine($"Poll {attempt}: job status is '{status.Status}'.");
+
+    if (IsStatus(status.Status, "succeeded"))
     {
-        var status = await client.GetJobStatusAsync(job.Id);
-        Console.WriteLine($"Poll {attempt}: job status is '{status.Status}'.");
-
-        if (IsStatus(status.Status, "succeeded"))
-        {
-            var pdfBytes = await client.DownloadJobResultAsync(job.Id);
-            var path = await WritePdfToDiskAsync(pdfBytes, "async");
-            Console.WriteLine($"Asynchronous job completed. Saved PDF to {path}\n");
-            return;
-        }
-
-        if (IsStatus(status.Status, "failed"))
-        {
-            throw new InvalidOperationException($"Job {job.Id} failed: {status.ErrorMessage ?? "Unknown error"}");
-        }
-
-        await Task.Delay(delay);
+      var pdfBytes = await client.DownloadJobResultAsync(job.Id);
+      var path = await WritePdfToDiskAsync(pdfBytes, "async");
+      Console.WriteLine($"Asynchronous job completed. Saved PDF to {path}\n");
+      return;
     }
 
-    throw new TimeoutException($"Job {job.Id} did not complete within the polling window. Try increasing maxAttempts.");
+    if (IsStatus(status.Status, "failed"))
+    {
+      throw new InvalidOperationException($"Job {job.Id} failed: {status.ErrorMessage ?? "Unknown error"}");
+    }
+
+    await Task.Delay(delay);
+  }
+
+  throw new TimeoutException($"Job {job.Id} did not complete within the polling window. Try increasing maxAttempts.");
 }
 
 static PdfGenerateRequest BuildInvoiceRequest(string html) => new()
 {
-    Html = html,
-    Options = new PdfOptions
-    {
-        PageSize = "A4",
-        MarginTop = 5,
-        MarginBottom = 5
-    }
+  Html = html,
+  Options = new PdfOptions
+  {
+    PageSize = "A4",
+    MarginTop = 5,
+    MarginBottom = 5
+  }
 };
 
 static async Task<string> WritePdfToDiskAsync(byte[] pdfBytes, string prefix)
 {
-    var fileName = $"paperapi-{prefix}-invoice-{DateTimeOffset.UtcNow:yyyyMMddHHmmss}.pdf";
-    var outputPath = Path.Combine(Directory.GetCurrentDirectory(), fileName);
-    await File.WriteAllBytesAsync(outputPath, pdfBytes);
-    return outputPath;
+  var fileName = $"paperapi-{prefix}-invoice-{DateTimeOffset.UtcNow:yyyyMMddHHmmss}.pdf";
+  var outputPath = Path.Combine(Directory.GetCurrentDirectory(), fileName);
+  await File.WriteAllBytesAsync(outputPath, pdfBytes);
+  return outputPath;
 }
 
 static bool IsStatus(string status, string expected) =>
@@ -147,63 +154,53 @@ static bool IsStatus(string status, string expected) =>
 
 static void LoadEnvFromRoot()
 {
-    var envFile = FindNearestEnvFile();
-    if (envFile is null)
-    {
-        Console.WriteLine("No .env file found. Falling back to existing environment variables.");
-        return;
-    }
+  var envFile = FindNearestEnvFile();
+  if (envFile is null)
+  {
+    Console.WriteLine("No .env file found. Falling back to existing environment variables.");
+    return;
+  }
 
-    Console.WriteLine($"Loading configuration from {envFile}");
-    foreach (var rawLine in File.ReadAllLines(envFile))
-    {
-        var line = rawLine.Trim();
-        if (string.IsNullOrEmpty(line) || line.StartsWith('#'))
-        {
-            continue;
-        }
-
-        var separatorIndex = line.IndexOf('=');
-        if (separatorIndex <= 0)
-        {
-            continue;
-        }
-
-        var key = line[..separatorIndex].Trim();
-        var value = line[(separatorIndex + 1)..].Trim();
-        Environment.SetEnvironmentVariable(key, value);
-    }
+  Console.WriteLine($"Loading configuration from {envFile}");
+  File.ReadAllLines(envFile)
+    .Select(rawLine => rawLine.Trim())
+    .Where(line => !string.IsNullOrEmpty(line) && !line.StartsWith('#'))
+    .Select(line => (line, separatorIndex: line.IndexOf('=')))
+    .Where(x => x.separatorIndex > 0)
+    .Select(x => (key: x.line[..x.separatorIndex].Trim(), value: x.line[(x.separatorIndex + 1)..].Trim()))
+    .ToList()
+    .ForEach(x => Environment.SetEnvironmentVariable(x.key, x.value));
 }
 
 static string? FindNearestEnvFile()
 {
-    var current = Directory.GetCurrentDirectory();
-    while (!string.IsNullOrEmpty(current))
+  var current = Directory.GetCurrentDirectory();
+  while (!string.IsNullOrEmpty(current))
+  {
+    var candidate = Path.Combine(current, ".env");
+    if (File.Exists(candidate))
     {
-        var candidate = Path.Combine(current, ".env");
-        if (File.Exists(candidate))
-        {
-            return candidate;
-        }
-
-        var parent = Directory.GetParent(current);
-        if (parent is null)
-        {
-            break;
-        }
-        current = parent.FullName;
+      return candidate;
     }
 
-    return null;
+    var parent = Directory.GetParent(current);
+    if (parent is null)
+    {
+      break;
+    }
+    current = parent.FullName;
+  }
+
+  return null;
 }
 
 static string GetRequiredEnv(string key)
 {
-    var value = Environment.GetEnvironmentVariable(key);
-    if (string.IsNullOrWhiteSpace(value))
-    {
-        throw new InvalidOperationException($"Environment variable '{key}' was not found. Did you update the .env file?");
-    }
+  var value = Environment.GetEnvironmentVariable(key);
+  if (string.IsNullOrWhiteSpace(value))
+  {
+    throw new InvalidOperationException($"Environment variable '{key}' was not found. Did you update the .env file?");
+  }
 
-    return value;
+  return value;
 }

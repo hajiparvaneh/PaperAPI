@@ -28,6 +28,13 @@ public sealed class PaperApiOptions
             : throw new ArgumentException("BaseUrl must be a valid absolute URI", nameof(BaseUrl));
     }
 
+    internal bool IsBaseUrlValid()
+    {
+        var value = string.IsNullOrWhiteSpace(BaseUrl) ? DefaultBaseUrl : BaseUrl;
+        value = value.EndsWith("/", StringComparison.Ordinal) ? value : value + "/";
+        return Uri.TryCreate(value, UriKind.Absolute, out _);
+    }
+
     internal void EnsureValid()
     {
         if (string.IsNullOrWhiteSpace(ApiKey))

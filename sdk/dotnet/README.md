@@ -49,6 +49,26 @@ Console.WriteLine("PDF written to invoice.pdf");
 
 > Tip: keep both `PAPERAPI_BASE_URL` and `PAPERAPI_API_KEY` in a `.env` file (as shown in the root README) so every environment resolves the correct API endpoint without hardcoding it.
 
+### ASP.NET Core DI
+```csharp
+// appsettings.json
+// "PaperApi": { "ApiKey": "...", "BaseUrl": "https://api.paperapi.de/" }
+
+builder.Services.AddPaperApiClient(builder.Configuration);
+
+var app = builder.Build();
+
+app.MapGet("/pdf", async (IPaperApiClient client) =>
+{
+    var bytes = await client.GeneratePdfAsync(new PdfGenerateRequest { Html = "<h1>Hello</h1>" });
+    return Results.File(bytes, "application/pdf", "hello.pdf");
+});
+```
+
+### Testing
+- Use `IPaperApiClient` to mock the SDK in unit tests.
+- For integration-style tests, construct `PaperApiClient` with a custom `HttpMessageHandler` to return canned responses without hitting the network.
+
 ### Supported endpoints
 
 `PaperApiClient` wraps every public API route:

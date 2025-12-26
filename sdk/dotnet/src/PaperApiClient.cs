@@ -12,7 +12,7 @@ namespace PaperApi;
 /// <summary>
 /// Lightweight HTTP client for PaperAPI.
 /// </summary>
-public sealed class PaperApiClient : IDisposable
+public sealed class PaperApiClient : IPaperApiClient, IDisposable
 {
     private static readonly ProductInfoHeaderValue UserAgentHeader = new("PaperApiDotnetSdk", "0.1.0");
 
@@ -26,30 +26,26 @@ public sealed class PaperApiClient : IDisposable
         WriteIndented = false
     };
 
-    public PaperApiClient(PaperApiOptions options, HttpClient? httpClient = null)
+    public PaperApiClient(HttpClient httpClient, PaperApiOptions options)
     {
+        _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         _options = options ?? throw new ArgumentNullException(nameof(options));
         _options.EnsureValid();
 
-        if (httpClient is null)
-        {
-            _httpClient = new HttpClient
-            {
-                BaseAddress = _options.ResolveBaseUri()
-            };
-            _ownsClient = true;
-        }
-        else
-        {
-            _httpClient = httpClient;
-            _httpClient.BaseAddress ??= _options.ResolveBaseUri();
-        }
+        _httpClient.BaseAddress ??= _options.ResolveBaseUri();
+        _ownsClient = false;
 
         var headers = _httpClient.DefaultRequestHeaders;
         if (!headers.UserAgent.Contains(UserAgentHeader))
         {
             headers.UserAgent.Add(UserAgentHeader);
         }
+    }
+
+    public PaperApiClient(PaperApiOptions options)
+        : this(new HttpClient(), options)
+    {
+        _ownsClient = true;
     }
 
     /// <summary>

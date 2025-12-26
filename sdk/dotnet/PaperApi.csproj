@@ -8,7 +8,7 @@
     <AssemblyName>PaperApi</AssemblyName>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageId>PaperApi</PackageId>
-    <Version>0.1.0-preview</Version>
+    <Version>0.1.1-preview</Version>
     <Authors>PaperAPI</Authors>
     <Company>PaperAPI</Company>
     <Description>Official PaperAPI client for .NET</Description>
@@ -25,6 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0.0" />
     <PackageReference Include="System.Text.Json" Version="8.0.6" />
   </ItemGroup>
 </Project>
