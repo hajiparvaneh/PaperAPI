@@ -7,7 +7,15 @@ export interface PdfOptions {
   marginLeft?: number;
   printMediaType?: boolean;
   disableSmartShrinking?: boolean;
+  /**
+   * Enables JavaScript execution. Do not use together with `disableJavascript`.
+   * If both are set, `disableJavascript` takes precedence.
+   */
   enableJavascript?: boolean;
+  /**
+   * Disables JavaScript execution. Do not use together with `enableJavascript`.
+   * If both are set, this option takes precedence.
+   */
   disableJavascript?: boolean;
   headerLeft?: string;
   headerCenter?: string;
@@ -24,7 +32,20 @@ export interface PdfOptions {
   imageDpi?: number;
   imageQuality?: number;
   lowQuality?: boolean;
+  /**
+   * Controls whether images are rendered in the generated PDF.
+   * - true: images are included
+   * - false: images are omitted
+   *
+   * If both `images` and `noImages` are specified, `noImages` takes precedence.
+   */
   images?: boolean;
+  /**
+   * @deprecated Use `images: false` instead.
+   *
+   * When both `images` and `noImages` are provided, `noImages` takes precedence
+   * and images will be disabled.
+   */
   noImages?: boolean;
 }
 

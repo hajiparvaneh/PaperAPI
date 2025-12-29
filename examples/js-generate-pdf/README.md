@@ -33,8 +33,8 @@ npm run build
 npm pack --pack-destination ../..
 
 # Install from the generated tarball (update the filename)
-cd ../examples/js-generate-pdf
-npm install ../../paperapi-sdk-0.1.0.tgz
+cd ../../examples/js-generate-pdf
+npm install ../../paperapi-sdk-0.1.1-preview.tgz
 ```
 
 After the package is published you can remove the tarball install – the declared `@paperapi/sdk` dependency will resolve straight from npm.

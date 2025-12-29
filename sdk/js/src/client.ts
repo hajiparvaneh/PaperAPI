@@ -66,12 +66,12 @@ export class PaperApiClient {
 
   async getJobStatus(jobId: string, options?: PaperApiRequestOptions): Promise<PdfJobStatusResponse> {
     const id = this.ensureJobId(jobId);
-    return this.sendForJson('GET', `jobs/${id}`, undefined, PdfJobStatusSchema, options);
+    return this.sendForJson('GET', `v1/jobs/${id}`, undefined, PdfJobStatusSchema, options);
   }
 
   async downloadJobResult(jobId: string, options?: PaperApiRequestOptions): Promise<ArrayBuffer> {
     const id = this.ensureJobId(jobId);
-    return this.sendForBinary('GET', `jobs/${id}/result`, undefined, 'application/pdf', options);
+    return this.sendForBinary('GET', `v1/jobs/${id}/result`, undefined, 'application/pdf', options);
   }
 
   async getUsageSummary(options?: PaperApiRequestOptions): Promise<UsageResponse> {
