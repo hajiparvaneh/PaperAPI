@@ -1,6 +1,6 @@
 # PaperAPI JavaScript SDK
 
-Official PaperAPI SDK for modern JavaScript runtimes (Node 18+, edge workers, and browsers). The package is published to npm as `@paperapi/sdk` and mirrors the functionality that the .NET client exposes.
+Official PaperAPI SDK for modern JavaScript runtimes (Node 18+, edge workers, and browsers). The package is published to npm as `@paperapi/sdk` and lets you render HTML to PDF (sync or async jobs) through PaperAPI's EU-hosted API.
 
 ## Features
 - Tiny dependency footprint (`zod` for runtime validation).
