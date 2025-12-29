@@ -1,4 +1,4 @@
-import type { ZodType } from 'zod';
+import type { ZodType, ZodTypeDef } from 'zod';
 import { PaperApiError } from './errors';
 import type { PaperApiClientOptions, PaperApiRequestOptions, PdfGenerateRequest } from './types';
 import {
@@ -149,7 +149,7 @@ export class PaperApiClient {
     method: string,
     path: string,
     body: unknown,
-    schema: ZodType<T>,
+    schema: ZodType<T, ZodTypeDef, unknown>,
     options?: PaperApiRequestOptions
   ): Promise<T> {
     const response = await this.send(method, path, body, 'application/json', options);
