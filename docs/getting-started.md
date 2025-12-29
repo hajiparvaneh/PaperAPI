@@ -61,12 +61,18 @@ Poll `GET /jobs/{id}` until `status` becomes `Succeeded`, then download the PDF 
 - `GET /health` returns `{ "status": "ok" }` so you can verify the API before starting workloads.
 
 ## Release workflow
-1. **Feature branches**: Submit PRs targeting `main`. CI builds the SDK and runs analyzers.
-2. **Versioning**: Update the `Version` property in `sdk/dotnet/PaperApi.csproj`. Semantic versioning is required.
-3. **Packing**: `dotnet pack -c Release` emits a NuGet package including XML docs and the README.
-4. **Publishing**: Use `dotnet nuget push bin/Release/PaperApi.<version>.nupkg -k <NUGET_API_KEY> -s https://api.nuget.org/v3/index.json` once the release workflow completes.
+1. **Feature branches**: Submit PRs targeting `main`. CI builds every SDK under `sdk/`.
+2. **Versioning**:
+   - .NET: Update the `Version` property inside `sdk/dotnet/PaperApi.csproj`.
+   - JavaScript: Update the `version` field in `sdk/js/package.json`.
+3. **Packing**:
+   - .NET: `dotnet pack -c Release` emits a NuGet package including XML docs and the README.
+   - JavaScript: `npm install && npm run build` produces `dist/index.(mjs|cjs|d.ts)` and `npm pack` bundles the tarball you can inspect locally.
+4. **Publishing**:
+   - .NET: `dotnet nuget push sdk/dotnet/artifacts/PaperApi.<version>.nupkg -k <NUGET_API_KEY> -s https://api.nuget.org/v3/index.json`.
+   - JavaScript: `cd sdk/js && npm publish --access public` using an npm token with publish rights.
 
 ## Roadmap
-- Ship JS SDK (TypeScript) with npm automation.
-- Ship Python SDK targeting `pydantic` models.
+- Ship the Python SDK targeting `pydantic` models.
 - Provide more advanced recipe-style examples (batch jobs, template design).
+- Publish framework-specific starter apps (Next.js, Remix) that reuse the npm SDK.

@@ -31,6 +31,35 @@ jobs:
           name: paperapi-dotnet-nuget
           path: sdk/dotnet/artifacts/*.nupkg
 
+  js-sdk:
+    name: Build & Pack JS SDK
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: sdk/js
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm install
+      - name: Lint & typecheck
+        run: npm run lint
+      - name: Build package
+        run: npm run build
+      - name: Prepare artifacts directory
+        run: mkdir -p artifacts
+      - name: Pack npm artifact
+        run: npm pack --pack-destination ./artifacts
+      - name: Upload npm artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: paperapi-js-npm
+          path: sdk/js/artifacts/*.tgz
+
   publish-nuget:
     name: Publish NuGet package
     needs: dotnet-sdk
@@ -61,3 +90,32 @@ jobs:
             --api-key "$NUGET_API_KEY" \
             --source https://api.nuget.org/v3/index.json \
             --skip-duplicate
+
+  publish-npm:
+    name: Publish npm package
+    needs: js-sdk
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: sdk/js
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: https://registry.npmjs.org
+      - name: Install dependencies
+        run: npm install
+      - name: Build package
+        run: npm run build
+      - name: Publish to npm
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          if [ -z "${NODE_AUTH_TOKEN}" ]; then
+            echo "NPM_TOKEN is not configured. Skipping publish." && exit 0
+          fi
+          npm publish --access public

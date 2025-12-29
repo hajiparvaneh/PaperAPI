@@ -1,7 +1,58 @@
 {
   "name": "@paperapi/sdk",
-  "version": "0.0.0-development",
-  "description": "PaperAPI JavaScript SDK (placeholder)",
-  "private": true,
-  "license": "MIT"
+  "version": "0.1.1-preview",
+  "description": "Official PaperAPI SDK for modern JavaScript runtimes.",
+  "license": "MIT",
+  "keywords": [
+    "paperapi",
+    "pdf",
+    "wkhtmltopdf",
+    "sdk"
+  ],
+  "homepage": "https://github.com/PaperAPI/Pubic_repo_sdk_example/tree/main/sdk/js#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PaperAPI/Pubic_repo_sdk_example.git",
+    "directory": "sdk/js"
+  },
+  "bugs": {
+    "url": "https://github.com/PaperAPI/Pubic_repo_sdk_example/issues"
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts --sourcemap --clean",
+    "clean": "rimraf dist",
+    "typecheck": "tsc --noEmit --pretty",
+    "lint": "npm run typecheck",
+    "test": "npm run lint",
+    "prepare": "npm run build"
+  },
+  "dependencies": {
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "rimraf": "^5.0.5",
+    "tsup": "^7.2.0",
+    "typescript": "^5.4.2"
+  }
 }
