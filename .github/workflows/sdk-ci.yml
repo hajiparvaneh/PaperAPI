@@ -44,6 +44,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+      - name: Set version from tag
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          npm pkg set version="$TAG"
       - name: Install dependencies
         run: npm install
       - name: Lint & typecheck
@@ -107,6 +111,10 @@ jobs:
         with:
           node-version: '20'
           registry-url: https://registry.npmjs.org
+      - name: Set version from tag
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          npm pkg set version="$TAG"
       - name: Install dependencies
         run: npm install
       - name: Build package
