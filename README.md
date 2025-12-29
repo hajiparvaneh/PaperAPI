@@ -34,7 +34,7 @@ Pubic_repo_sdk_example/
 ├── .env
 ├── sdk/
 │   ├── dotnet/          # First-class SDK, NuGet-ready
-│   ├── js/              # Placeholder for the upcoming npm package
+│   ├── js/              # TypeScript SDK bundled for npm
 │   └── python/          # Placeholder for the upcoming PyPI package
 ├── examples/
 │   ├── dotnet-generate-pdf/
@@ -44,14 +44,14 @@ Pubic_repo_sdk_example/
 └── .github/workflows/
 ```
 
-Each language folder is self-contained with its own README and publishing strategy. .NET is the first fully implemented SDK; the JavaScript and Python directories contain documentation stubs until their implementations are finalized.
+Each language folder is self-contained with its own README and publishing strategy. .NET and JavaScript ship production-ready SDKs, while Python remains a roadmap item for now.
 
 ## Examples
 
 Every example has its own README with prerequisites and end-to-end instructions. Start with the implementation that matches your stack:
 
 - [.NET – Generate a PDF](examples/dotnet-generate-pdf/README.md): console app that hits every PaperAPI endpoint (health, account metadata, sync generation, async jobs) and saves PDFs to disk.
-- [JavaScript – Generate a PDF](examples/js-generate-pdf/README.md): placeholder until the TypeScript SDK is finalized.
+- [JavaScript – Generate a PDF](examples/js-generate-pdf/README.md): TypeScript script that consumes the npm SDK, hits every endpoint, and downloads PDFs.
 - [Python – Generate a PDF](examples/python-generate-pdf/README.md): placeholder until the PyPI SDK ships.
 
 ## Documentation

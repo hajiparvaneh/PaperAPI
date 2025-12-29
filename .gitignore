@@ -4,16 +4,18 @@ sdk/dotnet/obj/
 sdk/dotnet/tests/**/bin/
 sdk/dotnet/tests/**/obj/
 sdk/dotnet/artifacts/
+sdk/js/node_modules/
+sdk/js/dist/
+sdk/js/build/
+sdk/js/artifacts/
 examples/**/bin/
 examples/**/obj/
 
 # JavaScript/TypeScript artifacts
-sdk/js/node_modules/
-sdk/js/dist/
-sdk/js/build/
 examples/**/node_modules/
 examples/**/dist/
 examples/**/build/
+examples/**/output/
 
 # Python artifacts
 sdk/python/**/__pycache__/

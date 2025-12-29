@@ -13,7 +13,7 @@
     <Company>PaperAPI</Company>
     <Description>Official PaperAPI client for .NET</Description>
     <PackageTags>paperapi;pdf;documents;api</PackageTags>
-    <RepositoryUrl>https://github.com/paperapi/Pubic_repo_sdk_example</RepositoryUrl>
+    <RepositoryUrl>https://github.com/paperapi/Public_repo_sdk_example</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeSymbols>true</IncludeSymbols>
