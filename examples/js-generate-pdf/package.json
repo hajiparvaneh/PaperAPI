@@ -7,7 +7,7 @@
     "dev": "tsx index.ts"
   },
   "dependencies": {
-    "@paperapi/sdk": "^0.1.0",
+    "@paperapi/sdk": "0.1.1-preview",
     "dotenv": "^16.4.5"
   },
   "devDependencies": {

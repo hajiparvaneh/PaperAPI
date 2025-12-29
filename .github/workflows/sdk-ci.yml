@@ -116,6 +116,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           if [ -z "${NODE_AUTH_TOKEN}" ]; then
-            echo "NPM_TOKEN is not configured. Skipping publish." && exit 0
+            echo "::error::NPM_TOKEN is not configured. Cannot publish package."
+            exit 1
           fi
           npm publish --access public
