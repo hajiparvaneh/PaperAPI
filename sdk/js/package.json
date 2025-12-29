@@ -9,14 +9,14 @@
     "wkhtmltopdf",
     "sdk"
   ],
-  "homepage": "https://github.com/PaperAPI/Public_repo_sdk_example/tree/main/sdk/js#readme",
+  "homepage": "https://github.com/hajiparvaneh/PaperAPI/tree/main/sdk/js#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/PaperAPI/Public_repo_sdk_example.git",
+    "url": "https://github.com/hajiparvaneh/PaperAPI.git",
     "directory": "sdk/js"
   },
   "bugs": {
-    "url": "https://github.com/PaperAPI/Public_repo_sdk_example/issues"
+    "url": "https://github.com/hajiparvaneh/PaperAPI/issues"
   },
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
