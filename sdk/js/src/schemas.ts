@@ -1,15 +1,12 @@
 import { z } from 'zod';
 
-const isoDateSchema = z.preprocess((value) => {
-  if (value instanceof Date) {
-    return value;
+const isoDateSchema = z.string().transform((value) => {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    throw new Error(`Invalid date: ${value}`);
   }
-  if (typeof value === 'string') {
-    const date = new Date(value);
-    return Number.isNaN(date.getTime()) ? undefined : date;
-  }
-  return value;
-}, z.date());
+  return date;
+});
 
 export const PdfJobLinksSchema = z.object({
   self: z.string(),
@@ -22,8 +19,8 @@ export const PdfJobStatusSchema = z.object({
   errorMessage: z.string().nullable().optional(),
   downloadUrl: z.string().nullable().optional(),
   jobStatusUrl: z.string().nullable().optional(),
-  createdAt: isoDateSchema,
-  expiresAt: isoDateSchema,
+  createdAt: isoDateSchema.optional(),
+  expiresAt: isoDateSchema.optional(),
   links: PdfJobLinksSchema
 });
 
@@ -32,7 +29,7 @@ export const UsageResponseSchema = z.object({
   monthlyLimit: z.number(),
   remaining: z.number(),
   overage: z.number(),
-  nextRechargeAt: isoDateSchema
+  nextRechargeAt: isoDateSchema.optional()
 });
 
 export const WhoAmIPlanResponseSchema = z.object({

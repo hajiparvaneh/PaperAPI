@@ -149,7 +149,7 @@ export class PaperApiClient {
     method: string,
     path: string,
     body: unknown,
-    schema: ZodType<T>,
+    schema: ZodType<T, any, any>,
     options?: PaperApiRequestOptions
   ): Promise<T> {
     const response = await this.send(method, path, body, 'application/json', options);
