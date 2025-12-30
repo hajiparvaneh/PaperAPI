@@ -15,6 +15,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Set version from tag
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          echo "SDK_VERSION=$VERSION" >> "$GITHUB_ENV"
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
@@ -22,9 +26,9 @@ jobs:
       - name: Restore
         run: dotnet restore
       - name: Build
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build --configuration Release --no-restore /p:Version=$SDK_VERSION /p:PackageVersion=$SDK_VERSION
       - name: Pack
-        run: dotnet pack --configuration Release --no-build --include-symbols --output ./artifacts
+        run: dotnet pack --configuration Release --no-build --include-symbols --output ./artifacts /p:Version=$SDK_VERSION /p:PackageVersion=$SDK_VERSION
       - name: Upload package artifact
         uses: actions/upload-artifact@v4
         with:
@@ -75,6 +79,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Set version from tag
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          echo "SDK_VERSION=$VERSION" >> "$GITHUB_ENV"
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
@@ -82,7 +90,7 @@ jobs:
       - name: Restore
         run: dotnet restore
       - name: Pack
-        run: dotnet pack --configuration Release --include-symbols --output ./artifacts
+        run: dotnet pack --configuration Release --include-symbols --output ./artifacts /p:Version=$SDK_VERSION /p:PackageVersion=$SDK_VERSION
       - name: Publish to NuGet
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
