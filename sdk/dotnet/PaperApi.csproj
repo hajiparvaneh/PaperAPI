@@ -8,10 +8,10 @@
     <AssemblyName>PaperApi</AssemblyName>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageId>PaperApi</PackageId>
-    <Version>0.1.1-preview</Version>
+    <Version>1.0.0</Version>
     <Authors>PaperAPI</Authors>
     <Company>PaperAPI</Company>
-    <Description>Official PaperAPI client for .NET</Description>
+    <Description>Official PaperAPI client for .NET; use your API key from https://paperapi.de (free sandbox 50 PDFs/mo, higher plans at /pricing)</Description>
     <PackageTags>paperapi;pdf;documents;api</PackageTags>
     <RepositoryUrl>https://github.com/paperapi/Public_repo_sdk_example</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>

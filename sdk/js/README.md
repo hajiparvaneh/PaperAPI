@@ -2,6 +2,11 @@
 
 Official PaperAPI SDK for modern JavaScript runtimes (Node 18+, edge workers, and browsers). The package is published to npm as `@paperapi/sdk` and lets you render HTML to PDF (sync or async jobs) through PaperAPI's EU-hosted API.
 
+## Account, API key, and pricing
+- Create a free account and grab your sandbox API key at https://paperapi.de/ (no card required).
+- Sandbox includes 50 PDFs/month and 5 requests per minute for prototyping; no overages.
+- Paid plans increase quotas and performance: Starter (1k PDFs/month), Pro (5k PDFs/month), Business (20k+ PDFs/month with burst traffic). See full details and overage rates at https://paperapi.de/pricing.
+
 ## Features
 - Tiny dependency footprint (`zod` for runtime validation).
 - Works anywhere `fetch` exists; supply `options.fetch` for Node environments older than 18.

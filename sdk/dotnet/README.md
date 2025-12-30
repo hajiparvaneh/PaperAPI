@@ -2,6 +2,11 @@
 
 The PaperAPI .NET SDK is a lightweight, dependency-free HTTP client that wraps the official PaperAPI endpoints and is ready to be published to NuGet.
 
+## Account, API key, and pricing
+- Create a free account and grab your sandbox API key at https://paperapi.de/ (no card required).
+- Sandbox includes 50 PDFs/month and 5 requests per minute for prototyping; no overages.
+- Paid plans increase quotas and performance: Starter (1k PDFs/month), Pro (5k PDFs/month), Business (20k+ PDFs/month with burst traffic). See full details and overage rates at https://paperapi.de/pricing.
+
 ## Requirements
 - .NET 8.0 SDK (the library targets `netstandard2.0` for broad compatibility).
 
