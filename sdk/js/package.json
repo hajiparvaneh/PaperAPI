@@ -1,6 +1,6 @@
 {
   "name": "@paperapi/sdk",
-  "version": "1.0.0",
+  "version": "0.0.0-dev",
   "description": "Official PaperAPI SDK for modern JavaScript runtimes; use your API key from https://paperapi.de (free sandbox 50 PDFs/mo, higher plans at /pricing).",
   "license": "MIT",
   "keywords": [
